@@ -25,7 +25,7 @@ app.use(express.static('website'));
 // Spin up the server
 // Callback to debug
 const port = 3000;
-const server = app.listen(port, () => { 
+const server = app.listen(port, () => {
     console.log(`running on localhost: ${port}`);
 });
 
