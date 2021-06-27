@@ -48,6 +48,8 @@ generateBtn.addEventListener('click', () => {
             feeling: feelings
         };
 
+        postData(server + '/add', data);
+
     });
 });
 
@@ -68,4 +70,18 @@ const getDataFromAPI = async () => {
     } catch (error) {
         console.error('Error: ' + error);
     }
+};
+
+/**
+ * @description Async fuction to POST data to the server
+ * @param {string} url
+ * @param {object} data
+ */
+const postData = async (url = '', data = {}) => {
+    const response = await fetch(url, {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    });
 };
