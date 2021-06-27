@@ -29,8 +29,12 @@ const server = app.listen(port, () => {
     console.log(`running on localhost: ${port}`);
 });
 
-// Initialize all route with a callback function
+// GET Rout 
+app.get('/all', (req, res) => {
+    res.send(projectData);
+});
 
-// Callback function to complete GET '/all'
-
-// Post Route
+// POST Rout 
+app.post('/add', (req, res) => {
+    projectData = req.body;
+});
