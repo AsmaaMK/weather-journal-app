@@ -16,11 +16,19 @@ const generateBtn = document.getElementById('generate');
 let zipCode;
 let feelings;
 
+const date = document.getElementById('date');
+const city = document.getElementById('city');
+const temp = document.getElementById('temp');
+const icon = document.getElementById('icon');
+const desc = document.getElementById('desc');
+const feeling = document.getElementById('feeling');
+const dataShow = document.getElementById('entryHolder');
+
 const server = 'http://localhost:3000';
 
 // Create a new date instance dynamically with JS
 let d = new Date();
-let newDate = d.getMonth() + '/' + d.getDate() + '/' + d.getFullYear();
+let newDate = d.toDateString();
 
 /** 
  * Event listener onclick the generate button to get the zipcode and feelings
@@ -50,7 +58,8 @@ generateBtn.addEventListener('click', () => {
 
         postData(server + '/add', data);
 
-    });
+    })
+        .then(() => updateUI(server + '/all'));
 });
 
 /**
@@ -84,4 +93,30 @@ const postData = async (url = '', data = {}) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
     });
+};
+
+/**
+ * @description Async fuction to GET the data from the server and update the DOM
+ * @param {string} url
+ */
+const updateUI = async (url = '') => {
+    const request = await fetch(url);
+    try {
+        const data = await request.json();
+
+        date.innerHTML = newDate;
+        city.innerHTML = data.city;
+        temp.innerHTML = data.temp + '&degC';
+        icon.setAttribute('src', data.icon);
+        desc.innerHTML = data.desc;
+        feeling.innerHTML = data.feeling;
+        dataShow.style.display = 'block';
+        
+        window.scrollTo({
+            top: dataShow.getBoundingClientRect().top + window.pageYOffset,
+            behavior: 'smooth'
+        });
+    } catch (error) {
+        console.error(error);
+    }
 };

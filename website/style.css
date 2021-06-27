@@ -17,6 +17,7 @@ body {
     background: url('danist-58MKf-UXjaA-unsplash.jpg');
     background-attachment: fixed;
     background-size: cover;
+    padding-top: 2em;
 }
 
 /*  Basic Styling To Override Default For Basic HTML Elements */
@@ -95,4 +96,30 @@ input:focus {
         width: 90%;
         margin: auto;
     }
+}
+
+#entryHolder {
+    background-color: #e2e5e6d0;
+    margin: 1.5em;
+    padding: 1.5em;
+    border-radius: 1em;
+    color: #3b4a6b;
+    font-size: 1.2rem;
+    position: relative;
+    display: none;
+}
+
+#city {
+    font-size: 2rem;
+}
+
+#temp {
+    font-size: 1.5rem;
+    color: #ec5f3a;
+}
+
+#icon {
+    position: absolute;
+    right: 1em;
+    top: 0.5em;
 }
