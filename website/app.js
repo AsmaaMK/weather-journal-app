@@ -16,6 +16,8 @@ const generateBtn = document.getElementById('generate');
 let zipCode;
 let feelings;
 
+const server = 'http://localhost:3000';
+
 // Create a new date instance dynamically with JS
 let d = new Date();
 let newDate = d.getMonth() + '/' + d.getDate() + '/' + d.getFullYear();
@@ -29,14 +31,31 @@ generateBtn.addEventListener('click', () => {
     feelings = feelingsInput.value;
     zipCodeInput.value = '';
     feelingsInput.value = '';
-    console.log(getData());
+
+    getDataFromAPI().then((res) => {
+        // destructing the data object
+        const {
+            name,
+            main: { temp },
+            weather: [{ description, icon: iconId }]
+        } = res;
+
+        const data = {
+            city: name,
+            temp: temp,
+            desc: description,
+            icon: 'https://openweathermap.org/img/wn/' + iconId + '@2x.png',
+            feeling: feelings
+        };
+
+    });
 });
 
 /**
  * @description Async function to GET Web API Data
- * @returns {object} result
+ * @returns {Promise} result
 */
-const getData = async () => {
+const getDataFromAPI = async () => {
     const url = baseURL + zipCode + apiKey + tempUnit;
     const res = await fetch(url);
     try {
